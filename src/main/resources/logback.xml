@@ -9,6 +9,6 @@
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="de.cakedown.swagmapper.ClassHierarchyComparator" level="error" />
+    <logger name="de.cakedown.swagmapper.resolve.ClassHierarchyComparator" level="error" />
 
 </configuration>

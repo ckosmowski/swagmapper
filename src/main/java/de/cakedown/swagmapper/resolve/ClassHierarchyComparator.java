@@ -1,4 +1,4 @@
-package de.cakedown.swagmapper;
+package de.cakedown.swagmapper.resolve;
 
 import org.apache.commons.lang3.ClassUtils;
 import org.slf4j.Logger;
