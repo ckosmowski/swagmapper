@@ -1,6 +1,16 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "io.codearte.gradle.nexus:gradle-nexus-staging-plugin:0.21.0"
+    }
+}
+
 plugins {
     id 'java'
     id 'maven'
+    id 'signing'
 }
 
 group 'de.cakedown'
@@ -8,8 +18,10 @@ version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
-apply plugin 'java'
-apply plugin 'maven'
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'signing'
+apply plugin: 'io.codearte.nexus-staging'
 
 repositories {
     mavenCentral()
@@ -76,3 +88,23 @@ uploadArchives {
         }
     }
 }
+
+import org.gradle.plugins.signing.Sign
+gradle.taskGraph.whenReady { taskGraph ->
+    if (taskGraph.allTasks.any { it instanceof Sign }) {
+        allprojects { ext."signing.keyId" = System.getenv('GPG_KEY_ID') }
+        allprojects { ext."signing.secretKeyRingFile" = System.getenv('GPG_KEY_LOCATION') }
+        allprojects { ext."signing.password" = System.getenv('GPG_PASSPHRASE') }
+    }
+    // Do not sign archives by default (a local build without gpg keyring should succeed)
+    if (taskGraph.allTasks.any { it.name == 'build' || it.name == 'assemble' }) {
+        tasks.findAll { it.name == 'signArchives' || it.name == 'signDocsJar' || it.name == 'signTestJar' }.each { task ->
+            task.enabled = false
+        }
+    }
+}
+signing
+        {
+            sign configurations.archives
+        }
+build.dependsOn.remove(signArchives)
