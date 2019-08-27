@@ -15,8 +15,8 @@ fi
 if [ "$TRAVIS_PULL_REQUEST" != "false" ];
 then
 	echo "Skip integration tests in pull request builds"
-	./gradlew clean build -x integrationTest
+	./gradlew clean build
 else
 	echo "Temporarily skip integration tests in all builds. Too heavy for Travis"
-	./gradlew clean build -x integrationTest
+	./gradlew clean build
 fi
