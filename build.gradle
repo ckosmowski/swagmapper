@@ -17,6 +17,7 @@ repositories {
 
 nexusStaging {
     packageGroup = "de.cakedown"
+    stagingRepositoryId = "decakedown-manual"
     username = System.getenv('SONATYPE_USERNAME')
     password = System.getenv('SONATYPE_PASSWORD')
 }
