@@ -12,8 +12,6 @@ GITHUB_REPOSITORY_NAME=swagmapper
 
 TRAVIS_PERSONAL_TOKEN=$(travis token)
 
-:${TRAVIS_PERSONAL_TOKEN:?"TRAVIS_PERSONAL_TOKEN needs to be set to access the Travis API to trigger the build"}
-
 body='
 {
     "request":
