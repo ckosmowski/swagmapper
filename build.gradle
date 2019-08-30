@@ -45,7 +45,7 @@ artifacts {
     archives javadocJar, sourcesJar
 }
 
-publishing {
+/*publishing {
     publications {
         maven(MavenPublication) {
             groupId = group
@@ -54,11 +54,14 @@ publishing {
             from components.java
         }
     }
-}
+}*/
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            groupId = group
+            artifactId = "swagmapper"
+            version = version
             pom {
                 name = project_name
                 description = project_description
