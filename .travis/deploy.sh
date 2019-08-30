@@ -9,6 +9,6 @@ then
 	if [ "$MANUAL_RELEASE_TRIGGERED" = "true" ];
 	then
 		echo "Promote repository"
-		./gradlew publishToSonatype
+		./gradlew closeAndReleaseRepository
 	fi
 fi
