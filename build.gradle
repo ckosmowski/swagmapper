@@ -46,10 +46,10 @@ task javadocJar(type: Jar) {
 publishing {
     publications {
         mavenJava(MavenPublication) {
+            from components.java
             groupId = group
             artifactId = "swagmapper"
             version = version
-            from components.java
             artifact sourcesJar
             artifact javadocJar
             pom {
@@ -145,6 +145,8 @@ gradle.taskGraph.whenReady { taskGraph ->
     }
 }
 signing {
-    sign publishing.publications.mavenJava;
+    sign configurations.archives
+    sign publishing.publications.mavenJava
 }
 build.dependsOn.remove(signArchives)
+build.dependsOn.remove(signMavenJavaPublication)
