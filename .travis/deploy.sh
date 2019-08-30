@@ -5,7 +5,7 @@ then
 	echo "Sign Archives"
 	./gradlew signArchives
 	echo "Upload Archives"
-	./gradlew uploadArchives
+	./gradlew publishToSonatype
 	if [ "$MANUAL_RELEASE_TRIGGERED" = "true" ];
 	then
 		echo "Promote repository"
