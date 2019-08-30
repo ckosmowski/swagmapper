@@ -7,7 +7,7 @@ plugins {
 }
 
 group 'de.cakedown'
-version '1.0-SNAPSHOT'
+version project_version
 
 sourceCompatibility = 1.8
 
