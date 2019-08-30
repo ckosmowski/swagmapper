@@ -33,27 +33,14 @@ dependencies {
     compile group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
 }
 
-task javadocJar(type: Jar) {
-    classifier = 'javadoc'
-    from javadoc
-}
 task sourcesJar(type: Jar) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-}
-artifacts {
-    archives javadocJar, sourcesJar
+    archiveClassifier = 'sources'
+    from sourceSets.main.allJava
 }
 
-publishing {
-    publications {
-        maven(MavenPublication) {
-            groupId = group
-            artifactId = "swagmapper"
-            version = version
-            from components.java
-        }
-    }
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc.destinationDir
 }
 
 publishing {
@@ -62,6 +49,9 @@ publishing {
             groupId = group
             artifactId = "swagmapper"
             version = version
+            from components.java
+            artifact sourcesJar
+            artifact javadocJar
             pom {
                 name = project_name
                 description = project_description
@@ -140,7 +130,7 @@ nexusPublishing {
     }
 }*/
 
-import org.gradle.plugins.signing.Sign
+import org.gradle.plugins.signing.Sign;
 gradle.taskGraph.whenReady { taskGraph ->
     if (taskGraph.allTasks.any { it instanceof Sign }) {
         allprojects { ext."signing.keyId" = System.getenv('GPG_KEY_ID') }
@@ -154,8 +144,7 @@ gradle.taskGraph.whenReady { taskGraph ->
         }
     }
 }
-signing
-        {
-            sign configurations.archives
-        }
+signing {
+    sign publishing.publications.mavenJava;
+}
 build.dependsOn.remove(signArchives)
