@@ -77,7 +77,7 @@ publishing {
                 developers {
                     developer {
                         id = project_developer
-                        name project_developer
+                        name = project_developer
                     }
                 }
                 scm {
